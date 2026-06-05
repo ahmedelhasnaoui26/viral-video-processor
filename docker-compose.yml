@@ -1,0 +1,8 @@
+services:
+  video-processor:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      VIDEO_PROCESSOR_TOKEN: ${VIDEO_PROCESSOR_TOKEN:-change-me}
+      PORT: "8080"
