@@ -30,21 +30,31 @@ git push origin main
 5. Railway builds from `Dockerfile` (see `railway.toml`)
 
 **Build failed: `no such file or directory .../services`?**  
-The commit Railway built does not contain `services/video-processor`. Push the code (step 1) and **Redeploy**.
+Railway’s GitHub snapshot does not include `services/`. Use **Option B** below (fastest), or:
 
-After code changes: push to GitHub, then Railway **Redeploy**.
+1. Push the **full** repo to GitHub (`git push`)
+2. Railway → **Settings → Root Directory** → leave **empty** (not `services/video-processor`)
+3. Railway → **Settings → Dockerfile Path** → `Dockerfile.video-processor` (at repo root)
+4. **Redeploy**
 
-### Option B — Deploy from your Mac (no GitHub path issues)
+### Option B — Deploy from your Mac (recommended if GitHub build keeps failing)
 
 ```bash
 npm i -g @railway/cli
-cd services/video-processor
-railway login
-railway init          # or railway link to existing service
-railway up
+cd "/Users/ahmedelhasnaoui/Desktop/Flutter Project/viral_imagetovideo_app"
+./scripts/deploy-video-processor-railway.sh
 ```
 
-Then **Settings → Networking → Generate Domain** and set `VIDEO_PROCESSOR_URL` in Supabase.
+First time only:
+
+```bash
+railway login
+railway link    # pick your "Viral Ai Video" service
+```
+
+In Railway → **Variables** → `VIDEO_PROCESSOR_TOKEN` = your secret  
+In Railway → **Settings → Root Directory** → **clear it** (empty) when using `railway up`  
+Then **Networking → Generate Domain** → set `VIDEO_PROCESSOR_URL` in Supabase.
 
 ### 2. Environment variables
 
